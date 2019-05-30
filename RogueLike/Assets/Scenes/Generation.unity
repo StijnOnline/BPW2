@@ -429,9 +429,11 @@ MonoBehaviour:
   backLayer: {fileID: 30696337}
   groundTile: {fileID: 11400000, guid: 56dcc1394ab4a1d45917b9abc7ac8176, type: 2}
   wallTile: {fileID: 11400000, guid: a4de6884588e5e7449d82a5a46934061, type: 2}
-  roomSize: 5
-  doorSize: 1
-  hallSize: 1
+  roomSize: 9
+  doorSize: 3
+  hallSize: 2
+  gridSize: 7
+  minRooms: 20
 --- !u!1 &1471155001
 GameObject:
   m_ObjectHideFlags: 0
