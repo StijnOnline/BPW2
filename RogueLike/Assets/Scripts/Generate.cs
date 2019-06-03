@@ -46,22 +46,30 @@ public class Generate : MonoBehaviour
             else if (r < .75f && oldLocation.y > 0) { offSet = new Vector2Int(0, -1); }
             else if (r < 1f && oldLocation.y < gridSize - 1) { offSet = new Vector2Int(0, 1); }
             else { continue; }
-            //Adding Location
-            newLocation = oldLocation + offSet;
-            if (locations.Contains(newLocation)) { continue; }
-            locations.Add(newLocation);
-            grid[newLocation.x, newLocation.y] = new Room();
-            //Choosing a roomstate
-            Room.RoomState roomState = Room.RoomState.Closed;
-            r = Random.Range(0f, 1f);
-            if (r < 0.25f) { roomState = Room.RoomState.Connected; }
-            else{ roomState = Room.RoomState.Open; }            
-            //Set room states
-            int state = 1 - offSet.y + (offSet.x != -1 ? 0 : 2);
-            grid[oldLocation.x, oldLocation.y].states[state] = roomState;            
-            state = 1 + offSet.y + (offSet.x != 1 ? 0 : 2);
-            grid[newLocation.x, newLocation.y].states[state] = roomState;
 
+            //Adding Location
+            r = Random.Range(0f, 1f); //chance to connect rooms
+
+            newLocation = oldLocation + offSet;
+            if (!locations.Contains(newLocation))
+            {
+                locations.Add(newLocation);
+                grid[newLocation.x, newLocation.y] = new Room();
+                r = 0; //always connect new rooms
+            }
+            if (r < 0.4f) //chance to connect rooms
+            {
+                //Choosing a roomstate
+                Room.RoomState roomState = Room.RoomState.Closed;
+                r = Random.Range(0f, 1f);
+                if (r < 0.25f) { roomState = Room.RoomState.Connected; }
+                else { roomState = Room.RoomState.Open; }
+                //Set room states
+                int state = 1 - offSet.y + (offSet.x != -1 ? 0 : 2);
+                grid[oldLocation.x, oldLocation.y].states[state] = roomState;
+                state = 1 + offSet.y + (offSet.x != 1 ? 0 : 2);
+                grid[newLocation.x, newLocation.y].states[state] = roomState;
+            }
         }
 
         Debug.Log("Generated Level");
@@ -108,6 +116,7 @@ public class Generate : MonoBehaviour
                         (index % roomSize == roomSize - hallSize - 1 || index % roomSize == hallSize))
                     {
                         tileArray[index] = wallTile; //block on corner
+                        
                     }
                     else { tileArray[index] = groundTile; } //block not on corner 
                 }
@@ -118,7 +127,7 @@ public class Generate : MonoBehaviour
                            (index % roomSize == hallSize && r.states[3] == Room.RoomState.Closed)
                        )
                 {
-                    tileArray[index] = wallTile;
+                    tileArray[index] = wallTile; 
                 }
                 //Open
                 if ((index / roomSize == roomSize - hallSize - 1 && r.states[0] == Room.RoomState.Open) ||
@@ -134,6 +143,7 @@ public class Generate : MonoBehaviour
                     else
                     {
                         tileArray[index] = wallTile; //block not in middle
+                        
                     }
                 }
 
@@ -148,7 +158,15 @@ public class Generate : MonoBehaviour
                     if ((index / roomSize <= hallSize || index / roomSize >= roomSize - hallSize - 1) &&
                         (index % roomSize >= roomSize - hallSize - 1 || index % roomSize <= hallSize))
                     {
-                        tileArray[index] = wallTile; //block on corner
+                        if ((index / roomSize < hallSize || index / roomSize > roomSize - hallSize - 1) &&
+                        (index % roomSize > roomSize - hallSize - 1 || index % roomSize < hallSize))
+                        {
+                            tileArray[index] = null;//blocks outside corner
+                        }
+                        else
+                        {
+                            tileArray[index] = wallTile; //blocks on corner
+                        }
                     }
                     else { tileArray[index] = groundTile; } //block not on corner 
                 }
@@ -181,7 +199,6 @@ public class Generate : MonoBehaviour
                         tileArray[index] = null; //outside
                     }
                 }
-
             }
             backLayer.SetTiles(positions, tileArray);
         }

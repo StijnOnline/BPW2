@@ -432,8 +432,8 @@ MonoBehaviour:
   roomSize: 9
   doorSize: 3
   hallSize: 2
-  gridSize: 7
-  minRooms: 20
+  gridSize: 8
+  minRooms: 30
 --- !u!1 &1471155001
 GameObject:
   m_ObjectHideFlags: 0
