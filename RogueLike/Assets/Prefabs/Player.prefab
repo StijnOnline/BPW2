@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8374485853617757640}
   - component: {fileID: 8374485853617757641}
   - component: {fileID: 8374485853617757646}
+  - component: {fileID: 8374485853398491367}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -145,8 +146,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  reloadSpeed: 1
   crossBow: {fileID: 8374485854179561977}
-  arrow: {fileID: 0}
+  arrow: {fileID: 3189624638056150836, guid: e633c9715a64a6744a517703ce7656d8, type: 3}
+--- !u!114 &8374485853398491367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374485853617757647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f20e1635c0f83048b966230dc53a8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
+  speed: 0
+  poison: 0
+  bleed: 0
+  fire: 0
+  damage: 1
+  doPoison: 1
+  poisonTime: 3
+  poisonDamage: 2
+  doBleed: 0
+  bleedTime: 5
+  bleedDamage: 1
+  doFire: 0
+  fireTime: 2
+  fireDamage: 3
 --- !u!1 &8374485853772994713
 GameObject:
   m_ObjectHideFlags: 0

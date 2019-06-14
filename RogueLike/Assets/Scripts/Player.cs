@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
         rigidB = GetComponent<Rigidbody2D>();
         shoot = crossBow.GetComponent<Animator>();
 
-        
+
     }
 
     void Update()
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
 
         //move player
-        Vector2 input = new Vector2(0,0);
+        Vector2 input = new Vector2(0, 0);
         input.x = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
         input.y = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
         rigidB.velocity = input * moveSpeed;
@@ -37,15 +37,26 @@ public class Player : MonoBehaviour
         crossBow.rotation = Quaternion.Euler(0, 0, AngleDeg);
 
         //mirror crossbow
-        if (mousePos.x - crossBow.position.x < 0){crossBow.localScale = new Vector3(1,-1,1); }
+        if (mousePos.x - crossBow.position.x < 0) { crossBow.localScale = new Vector3(1, -1, 1); }
         else { crossBow.localScale = new Vector3(1, 1, 1); }
 
 
         if (Input.GetMouseButtonDown(0) && shoot.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             shoot.SetBool("Shoot", true);
-            Instantiate(arrow, crossBow.position, crossBow.rotation);
+            Shoot();
+            if (PlayerStats.stats.doubleShot) { Invoke("Shoot", 0.1f); }
         }
         else { shoot.SetBool("Shoot", false); }
+    }
+
+    void Shoot()
+    {
+        Instantiate(arrow, crossBow.position, crossBow.rotation);
+        if (PlayerStats.stats.diagonal)
+        {
+            Instantiate(arrow, crossBow.position + crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, 5));
+            Instantiate(arrow, crossBow.position - crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, -5));
+        }
     }
 }
