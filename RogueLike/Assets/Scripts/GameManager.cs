@@ -12,5 +12,8 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject healthBar;
+    public Sprite poisonSprite;
+    public Sprite bleedSprite;
+    public Sprite fireSprite;
 
 }

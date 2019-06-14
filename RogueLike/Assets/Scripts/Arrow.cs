@@ -23,7 +23,13 @@ public class Arrow : MonoBehaviour
         GameObject other = collision.gameObject;
         if (other.tag == "Enemy")
         {
-            other.GetComponent<Enemy>().TakeDamage(PlayerStats.stats.damage);
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            enemy.health -= PlayerStats.stats.damage;            
+            if (PlayerStats.stats.doFire) { enemy.fire = PlayerStats.stats.fireTime; }
+            if (PlayerStats.stats.doBleed) { enemy.bleed = PlayerStats.stats.bleedTime; }
+            if (PlayerStats.stats.doPoison) { enemy.poison = PlayerStats.stats.poisonTime; }
+            enemy.UpdateHUD();
             Destroy(gameObject);
         }
     }

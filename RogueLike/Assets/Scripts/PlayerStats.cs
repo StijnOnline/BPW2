@@ -21,8 +21,18 @@ public class PlayerStats : MonoBehaviour
 
     //Arrow
     public float damage = 1;
+
     public bool doPoison = false;
+    public float poisonTime = 3f;
+    public float poisonDamage = 2f;
+
     public bool doBleed = false;
+    public float bleedTime = 5f;
+    public float bleedDamage = 1f;
+
     public bool doFire = false;
+    public float fireTime = 2f;
+    public float fireDamage = 3f;
+
 
 }
