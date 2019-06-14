@@ -42,6 +42,10 @@ public class Enemy : MonoBehaviour
         if (bleed > 0) { statusEffects[statusses].sprite = GameManager.GM.bleedSprite; statusses++; }
         if (fire > 0) { statusEffects[statusses].sprite = GameManager.GM.fireSprite; statusses++; }
         for (int i = statusses; i < statusEffects.Length; i++) { statusEffects[i].sprite = null; }
+    }
+    
+    public void Die()
+    {
 
     }
 }
