@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
+    public float reloadSpeed = 1f;
     public Transform crossBow;
     public GameObject arrow;
     Animator shoot;
@@ -14,10 +15,15 @@ public class Player : MonoBehaviour
     {
         rigidB = GetComponent<Rigidbody2D>();
         shoot = crossBow.GetComponent<Animator>();
+
+        
     }
 
     void Update()
     {
+        shoot.SetFloat("ReloadSpeed", reloadSpeed);
+
+
         //move player
         Vector2 input = new Vector2(0,0);
         input.x = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);

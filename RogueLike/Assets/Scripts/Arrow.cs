@@ -17,4 +17,14 @@ public class Arrow : MonoBehaviour
     {
         
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject other = collision.gameObject;
+        if (other.tag == "Enemy")
+        {
+            other.GetComponent<Enemy>().TakeDamage(PlayerStats.stats.damage);
+            Destroy(gameObject);
+        }
+    }
 }
