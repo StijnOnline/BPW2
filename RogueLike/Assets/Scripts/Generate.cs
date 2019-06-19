@@ -212,5 +212,9 @@ public class Generate : MonoBehaviour
         //3 states: Closed, Open, Connected
         public enum RoomState { Closed, Open, Connected };
         public RoomState[] states = new RoomState[4];
+
+        //Types of rooms: Abandoned, Enemy (slime, ...), Boss, Treasure,
+        public enum RoomType { Abandoned, Enemy, Treasure };
+        public RoomState type;
     }
 }

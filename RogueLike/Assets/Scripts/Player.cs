@@ -37,8 +37,14 @@ public class Player : MonoBehaviour
         crossBow.rotation = Quaternion.Euler(0, 0, AngleDeg);
 
         //mirror crossbow
-        if (mousePos.x - crossBow.position.x < 0) { crossBow.localScale = new Vector3(1, -1, 1); }
-        else { crossBow.localScale = new Vector3(1, 1, 1); }
+        if (mousePos.x - crossBow.position.x < 0) {
+            crossBow.localScale = new Vector3(1, -1, 1);
+            crossBow.GetChild(0).localRotation = Quaternion.Euler(0,0,90);
+        }
+        else {
+            crossBow.localScale = new Vector3(1, 1, 1);
+            crossBow.GetChild(0).localRotation = Quaternion.Euler(0, 0, -90);
+        }
 
 
         if (Input.GetMouseButtonDown(0) && shoot.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

@@ -31,12 +31,14 @@ public class Enemy : MonoBehaviour
         if (poison > 0) {health -= PlayerStats.stats.poisonDamage; poison -= 1; } 
         if (bleed > 0) { health -= PlayerStats.stats.bleedDamage; bleed -= 1; } 
         if (fire > 0) { health -= PlayerStats.stats.fireDamage; fire -= 1; }
+        health = Mathf.Max(health,0);
         UpdateHUD();
     }
 
     public void UpdateHUD()
     {
-        healthBar.transform.GetChild(1).localPosition = new Vector3(-(maxHealth - health) / maxHealth, 0, 0);
+        healthBar.transform.GetChild(1).localPosition = new Vector3( health / maxHealth / 2f - 0.5f, 0, 0);
+        healthBar.transform.GetChild(1).localScale = new Vector3( health / maxHealth , 0.2f, 0);
         int statusses = 0;
         if (poison > 0) { statusEffects[statusses].sprite = GameManager.GM.poisonSprite; statusses++; }
         if (bleed > 0) { statusEffects[statusses].sprite = GameManager.GM.bleedSprite; statusses++; }
@@ -46,6 +48,6 @@ public class Enemy : MonoBehaviour
     
     public void Die()
     {
-
+        this.enabled = false;
     }
 }
