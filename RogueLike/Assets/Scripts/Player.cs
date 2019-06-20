@@ -65,4 +65,30 @@ public class Player : MonoBehaviour
             Instantiate(arrow, crossBow.position - crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, -5));
         }
     }
+
+    public void Upgrade(GameManager.UpgradeType type)
+    {
+        switch (type)
+        {
+            case GameManager.UpgradeType.PoisonArrow:
+                PlayerStats.stats.doPoison = true;
+                break;
+            case GameManager.UpgradeType.BleedArrow:
+                PlayerStats.stats.doBleed = true;
+                break;
+            case GameManager.UpgradeType.FireArrow:
+                PlayerStats.stats.doFire = true;
+                break;
+            case GameManager.UpgradeType.DoubleShot:
+                PlayerStats.stats.doubleShot = true;
+                break;
+            case GameManager.UpgradeType.DiagnalShot:
+                PlayerStats.stats.diagonal = true;
+                break;
+        }
+        if (type != GameManager.UpgradeType.HealthUp || type != GameManager.UpgradeType.DamageUp)
+        {
+            GameManager.GM.collectedUpgrades.Add(type);
+        }
+    }
 }
