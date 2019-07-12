@@ -29,7 +29,9 @@ public class Arrow : MonoBehaviour
             if (PlayerStats.stats.doFire) { enemy.fire = PlayerStats.stats.fireTime; }
             if (PlayerStats.stats.doBleed) { enemy.bleed = PlayerStats.stats.bleedTime; }
             if (PlayerStats.stats.doPoison) { enemy.poison = PlayerStats.stats.poisonTime; }
-            enemy.UpdateHUD();
+            if (enemy.health <= 0) { enemy.Die(); }
+            else { enemy.UpdateHUD(); }
+            
             
         }
 

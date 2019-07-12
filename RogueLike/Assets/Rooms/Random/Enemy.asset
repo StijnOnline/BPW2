@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::RoomType
+  randomTiles:
+  - {fileID: 11400000, guid: 83fe346b5d3ddd444878b12916d0f380, type: 2}
+  randomEnemies:
+  - {fileID: 6921316493332589581, guid: 9ce760551f476ca45858107fb3098e96, type: 3}

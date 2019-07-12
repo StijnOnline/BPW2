@@ -5,31 +5,50 @@ using UnityEngine.Tilemaps;
 
 public class Generate : MonoBehaviour
 {
+    //Local Room Generation Settings
+    int roomSize = 5;
+    int doorSize = 1;
+    int hallSize = 2;
+
+    int gridSize = 5;
+    int minRooms = 4;
+    int treasureRooms = 1;
+
+    [Header("Tiles")]
     public Tilemap backLayer;
+    public Tilemap frontLayer;
+    [Space(10)]
     public Tile groundTile;
     public Tile wallTile;
 
     [SerializeField]
     Room[,] grid;
 
-    public int roomSize = 5;
-    public int doorSize = 1;
-    public int hallSize = 2;
+    
 
-    public int gridSize = 5;
-    public int minRooms = 4;
+    HashSet<Vector2Int> locations = new HashSet<Vector2Int>();
 
-    void Start()
+    void Awake()
     {
+        //get Room Generation Settings
+        GameManager gm = GameManager.GM;
+        roomSize = gm.roomSize;
+        doorSize = gm.doorSize;
+        hallSize = gm.hallSize;
+
+        gridSize = gm.gridSize;
+        minRooms = gm.minRooms;
+        treasureRooms = gm.treasureRooms;
+
         grid = new Room[gridSize, gridSize];
         GenerateGrid();
         PlaceTiles();
+        FillRooms();
+
     }
 
     void GenerateGrid()
     {
-
-        HashSet<Vector2Int> locations = new HashSet<Vector2Int>();
         Vector2Int startLocacation = new Vector2Int(gridSize / 2, gridSize / 2);
         locations.Add(startLocacation);
         grid[startLocacation.x, startLocacation.y] = new Room();
@@ -69,9 +88,30 @@ public class Generate : MonoBehaviour
                 grid[oldLocation.x, oldLocation.y].states[state] = roomState;
                 state = 1 + offSet.y + (offSet.x != 1 ? 0 : 2);
                 grid[newLocation.x, newLocation.y].states[state] = roomState;
+                //Roomtypes
+                grid[newLocation.x, newLocation.y].Randomise();
             }
         }
+        HashSet<Vector2Int> filtered = new HashSet<Vector2Int>(locations); //all generated rooms exept the following       
 
+        //Random start room
+        Vector2Int startR = filtered.ElementAt(Random.Range(0, filtered.Count));
+        grid[startR.x, startR.y].type = GameManager.GM.startRoom;        
+        filtered.Remove(startR);
+
+        //Random boss room
+        Vector2Int bossR = filtered.ElementAt(Random.Range(0, filtered.Count));
+        grid[bossR.x, bossR.y].type = GameManager.GM.bossRoom;
+        filtered.Remove(bossR);
+
+        Vector2Int treasureR;
+        //Random treasure rooms
+        for (int i = 0; i < treasureRooms; i++)
+        {
+            treasureR = filtered.ElementAt(Random.Range(0, filtered.Count));
+            grid[treasureR.x, treasureR.y].type = GameManager.GM.treasureRoom;
+            filtered.Remove(treasureR);
+        }
         Debug.Log("Generated Level");
 
     }
@@ -116,7 +156,7 @@ public class Generate : MonoBehaviour
                         (index % roomSize == roomSize - hallSize - 1 || index % roomSize == hallSize))
                     {
                         tileArray[index] = wallTile; //block on corner
-                        
+
                     }
                     else { tileArray[index] = groundTile; } //block not on corner 
                 }
@@ -127,7 +167,7 @@ public class Generate : MonoBehaviour
                            (index % roomSize == hallSize && r.states[3] == Room.RoomState.Closed)
                        )
                 {
-                    tileArray[index] = wallTile; 
+                    tileArray[index] = wallTile;
                 }
                 //Open
                 if ((index / roomSize == roomSize - hallSize - 1 && r.states[0] == Room.RoomState.Open) ||
@@ -143,7 +183,7 @@ public class Generate : MonoBehaviour
                     else
                     {
                         tileArray[index] = wallTile; //block not in middle
-                        
+
                     }
                 }
 
@@ -205,16 +245,63 @@ public class Generate : MonoBehaviour
         Debug.Log("Placed Tiles");
     }
 
-
-    public class Room
+    void FillRooms()
     {
-        //4 directions: Up, Right, Down, Left
-        //3 states: Closed, Open, Connected
-        public enum RoomState { Closed, Open, Connected };
-        public RoomState[] states = new RoomState[4];
+        foreach (Vector2Int location in locations)
+        {
+            Room room = grid[location.x, location.y];
+            Vector2 roomCenter = location * roomSize + Vector2.one * roomSize / 2;
 
-        //Types of rooms: Abandoned, Enemy (slime, ...), Boss, Treasure,
-        public enum RoomType { Abandoned, Enemy, Treasure };
-        public RoomState type;
+            if(room.type.name == "Start")
+            {
+                Instantiate(GameManager.GM.player, roomCenter, Quaternion.identity);
+            }
+            if (room.type.name == "Enemy")
+            {
+                Instantiate(GameManager.GM.enemies[0], roomCenter, Quaternion.identity);
+            }
+            if(room.type.name == "Treasure")
+            {
+                Tile tile = new Tile(); tile.name = "Chest";
+                Chest[] chests = new Chest[2];
+
+                HashSet<Vector2> chestLocations = new HashSet<Vector2>();
+                while (chestLocations.Count < 2)
+                {
+                    chestLocations.Add(roomCenter + RandomV2(2, 4));
+                }
+
+                frontLayer.SetTile(Vector3Int.FloorToInt(chestLocations.First()), tile);
+                chests[0] = Instantiate(GameManager.GM.chest, chestLocations.First(), Quaternion.identity).GetComponent<Chest>();
+                frontLayer.SetTile(Vector3Int.FloorToInt(chestLocations.Last()), tile);
+                chests[1] = Instantiate(GameManager.GM.chest, chestLocations.Last(), Quaternion.identity).GetComponent<Chest>();
+
+                chests[0].otherChest = chests[1].gameObject;
+                chests[1].otherChest = chests[0].gameObject;
+
+
+                //while (chests.Count < 2)
+                //{
+                //    rPos = roomCenter + RandomV2(2, 4);
+                //    if (frontLayer.GetTile(Vector3Int.FloorToInt(rPos)) == null)
+                //    {
+                //        frontLayer.SetTile(Vector3Int.FloorToInt(rPos), tile);
+                //        chests.Add(Instantiate(GameManager.GM.chest, rPos, Quaternion.identity).GetComponent<Chest>());
+                //    }
+                //}
+            }
+
+        }
+
+        Debug.Log("Filled Rooms");
+    }
+
+
+   
+
+    ///Generates a Vector2 with min and max on absolute value
+    public Vector2 RandomV2(int mindist, int maxdist)
+    {
+        return new Vector2(Random.Range(-1, 1) * Random.Range(mindist, maxdist), Random.Range(-1, 1) * Random.Range(mindist, maxdist));
     }
 }

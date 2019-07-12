@@ -23,22 +23,22 @@ public class Enemy : MonoBehaviour
         healthBar.transform.localPosition = new Vector3(0,0.4f,0);
         statusEffects = healthBar.transform.GetChild(0).GetComponentsInChildren<SpriteRenderer>();
 
-        InvokeRepeating("Tick",0f,1f);
+        InvokeRepeating("DamageTick", 0f,1f);
     }
 
-    public void Tick()
+    public void DamageTick()
     {
         if (poison > 0) {health -= PlayerStats.stats.poisonDamage; poison -= 1; } 
         if (bleed > 0) { health -= PlayerStats.stats.bleedDamage; bleed -= 1; } 
         if (fire > 0) { health -= PlayerStats.stats.fireDamage; fire -= 1; }
-        health = Mathf.Max(health,0);
+        if (health <= 0) { Die(); }
         UpdateHUD();
     }
 
     public void UpdateHUD()
     {
-        healthBar.transform.GetChild(1).localPosition = new Vector3( health / maxHealth / 2f - 0.5f, 0, 0);
-        healthBar.transform.GetChild(1).localScale = new Vector3( health / maxHealth , 0.2f, 0);
+        healthBar.transform.GetChild(1).localPosition = new Vector3( (health / maxHealth / 2f - 0.5f) , 0, 0);
+        healthBar.transform.GetChild(1).localScale = new Vector3( (health / maxHealth) , 0.2f, 0);
         int statusses = 0;
         if (poison > 0) { statusEffects[statusses].sprite = GameManager.GM.poisonSprite; statusses++; }
         if (bleed > 0) { statusEffects[statusses].sprite = GameManager.GM.bleedSprite; statusses++; }
@@ -46,8 +46,8 @@ public class Enemy : MonoBehaviour
         for (int i = statusses; i < statusEffects.Length; i++) { statusEffects[i].sprite = null; }
     }
     
-    public void Die()
+    public virtual void Die()
     {
-        this.enabled = false;
+        Destroy(gameObject);
     }
 }
