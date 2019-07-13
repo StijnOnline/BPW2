@@ -6,17 +6,25 @@ public class Enemy : MonoBehaviour
 {
     public float maxHealth;
     [HideInInspector] public float health;
-    public float damage;
-    public float speed;
+    public float damage;    
     public float poison = 0;
     public float bleed = 0;
     public float fire = 0;
 
-    public GameObject healthBar;
+    public float speed;
+    public float moveDelay = 0f;
+    float lastMove = 0f;
+    public float detectionRange = 4f;
+
+    [HideInInspector] public Rigidbody2D rigidB;
+
+    [HideInInspector] public GameObject healthBar;
     SpriteRenderer[] statusEffects;
 
     private void Start()
     {
+        rigidB = GetComponent<Rigidbody2D>();
+
         health = maxHealth;
 
         healthBar = Instantiate(GameManager.GM.healthBar,transform);
@@ -24,6 +32,15 @@ public class Enemy : MonoBehaviour
         statusEffects = healthBar.transform.GetChild(0).GetComponentsInChildren<SpriteRenderer>();
 
         InvokeRepeating("DamageTick", 0f,1f);
+    }
+
+    void Update()
+    {
+        if(Time.time > lastMove + moveDelay)
+        {
+            lastMove = Time.time;
+            Move();
+        }
     }
 
     public void DamageTick()
@@ -49,5 +66,10 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
         Destroy(gameObject);
+    }
+
+    public virtual void Move()
+    {
+        Debug.Log("Enemy moved");
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// TODO: fix chests having dupe upgrade after you collected some
+
 public class Chest : MonoBehaviour
 {
     public GameManager.UpgradeType type;
@@ -12,7 +14,8 @@ public class Chest : MonoBehaviour
     public GameObject otherChest;
     public bool locked = false;
 
-    void Start()
+    
+    void Start() 
     {
         SelectType();
         text.SetText("Choose\n" + type.ToString());

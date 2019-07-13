@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
     public int gridSize = 5;
     public int minRooms = 4;
     public int treasureRooms = 1;
+    
 
     [Header("Rooms")]
     public RoomType startRoom;
     public RoomType treasureRoom;
     public RoomType bossRoom;
     public RoomType[] randomRooms;
+    public int roomObjects = 3;
 
     [Header("Upgrades")]
     public List<UpgradeType> collectedUpgrades = new List<UpgradeType>();
@@ -36,19 +38,12 @@ public class GameManager : MonoBehaviour
     public GameObject healthBar;
     public Sprite poisonSprite;
     public Sprite bleedSprite;
-    public Sprite fireSprite;
-
-    
-
-
+    public Sprite fireSprite; 
 
     void Awake()
     {
         GM = this;
-        //randomRooms = Resources.LoadAll("Rooms", typeof(RoomType)) as RoomType;
-        //Resources.FindObjectsOfTypeAll<RoomType>();
+        randomRooms = Resources.LoadAll<RoomType>("Rooms/Random");
     }
-
-    
 
 }

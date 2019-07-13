@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: y-based layering
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;

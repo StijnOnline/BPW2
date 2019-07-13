@@ -6,6 +6,19 @@ public class Slime : Enemy
 {
     public int size = 2;
 
+
+    public override void Move()
+    {
+
+        Vector3 playerPos = GameManager.GM.player.transform.position;
+        Vector2 toPlayer = (Vector2)(playerPos - transform.position);
+
+        if (toPlayer.magnitude < detectionRange) 
+        {
+            rigidB.AddForce( toPlayer * speed, ForceMode2D.Impulse );
+        }
+    }
+
     public override void Die()
     {
         if (size > 1)

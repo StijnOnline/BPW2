@@ -261,6 +261,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
+        type: 3}
+      propertyPath: randomRooms.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81959d0bcbc884a4199a5f1af9159ab1, type: 3}
 --- !u!1001 &1683650607

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Start
   m_EditorClassIdentifier: Assembly-CSharp::RoomType
-  name: 
   randomTiles: []
   randomEnemies: []

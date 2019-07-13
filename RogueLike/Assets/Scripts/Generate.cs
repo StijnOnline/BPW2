@@ -13,6 +13,7 @@ public class Generate : MonoBehaviour
     int gridSize = 5;
     int minRooms = 4;
     int treasureRooms = 1;
+    int roomObjects = 3;
 
     [Header("Tiles")]
     public Tilemap backLayer;
@@ -35,10 +36,10 @@ public class Generate : MonoBehaviour
         roomSize = gm.roomSize;
         doorSize = gm.doorSize;
         hallSize = gm.hallSize;
-
         gridSize = gm.gridSize;
         minRooms = gm.minRooms;
         treasureRooms = gm.treasureRooms;
+        roomObjects = gm.roomObjects;
 
         grid = new Room[gridSize, gridSize];
         GenerateGrid();
@@ -52,6 +53,7 @@ public class Generate : MonoBehaviour
         Vector2Int startLocacation = new Vector2Int(gridSize / 2, gridSize / 2);
         locations.Add(startLocacation);
         grid[startLocacation.x, startLocacation.y] = new Room();
+        grid[startLocacation.x, startLocacation.y].Randomise();
 
         while (locations.Count < minRooms)
         {
@@ -74,6 +76,7 @@ public class Generate : MonoBehaviour
             {
                 locations.Add(newLocation);
                 grid[newLocation.x, newLocation.y] = new Room();
+                grid[newLocation.x, newLocation.y].Randomise();
                 r = 0; //always connect new rooms
             }
             if (r < 0.4f) //chance to connect rooms
@@ -88,8 +91,6 @@ public class Generate : MonoBehaviour
                 grid[oldLocation.x, oldLocation.y].states[state] = roomState;
                 state = 1 + offSet.y + (offSet.x != 1 ? 0 : 2);
                 grid[newLocation.x, newLocation.y].states[state] = roomState;
-                //Roomtypes
-                grid[newLocation.x, newLocation.y].Randomise();
             }
         }
         HashSet<Vector2Int> filtered = new HashSet<Vector2Int>(locations); //all generated rooms exept the following       
@@ -252,15 +253,12 @@ public class Generate : MonoBehaviour
             Room room = grid[location.x, location.y];
             Vector2 roomCenter = location * roomSize + Vector2.one * roomSize / 2;
 
-            if(room.type.name == "Start")
+            if (room.type.name == "Start")
             {
-                Instantiate(GameManager.GM.player, roomCenter, Quaternion.identity);
+                GameManager.GM.player = Instantiate(GameManager.GM.player, roomCenter, Quaternion.identity);
             }
-            if (room.type.name == "Enemy")
-            {
-                Instantiate(GameManager.GM.enemies[0], roomCenter, Quaternion.identity);
-            }
-            if(room.type.name == "Treasure")
+            else
+            if (room.type.name == "Treasure")
             {
                 Tile tile = new Tile(); tile.name = "Chest";
                 Chest[] chests = new Chest[2];
@@ -268,7 +266,7 @@ public class Generate : MonoBehaviour
                 HashSet<Vector2> chestLocations = new HashSet<Vector2>();
                 while (chestLocations.Count < 2)
                 {
-                    chestLocations.Add(roomCenter + RandomV2(2, 4));
+                    chestLocations.Add(roomCenter + RandomV2(0, 3));
                 }
 
                 frontLayer.SetTile(Vector3Int.FloorToInt(chestLocations.First()), tile);
@@ -279,18 +277,44 @@ public class Generate : MonoBehaviour
                 chests[0].otherChest = chests[1].gameObject;
                 chests[1].otherChest = chests[0].gameObject;
 
+            }
+            else
+            if (room.type.name == "Boss")
+            {
 
-                //while (chests.Count < 2)
-                //{
-                //    rPos = roomCenter + RandomV2(2, 4);
-                //    if (frontLayer.GetTile(Vector3Int.FloorToInt(rPos)) == null)
-                //    {
-                //        frontLayer.SetTile(Vector3Int.FloorToInt(rPos), tile);
-                //        chests.Add(Instantiate(GameManager.GM.chest, rPos, Quaternion.identity).GetComponent<Chest>());
-                //    }
-                //}
+            }
+            else
+            {
+                Tile tile = new Tile(); tile.name = "Enemy";
+                int enemies = 0;
+                while (enemies < room.type.enemies)
+                {
+                    Vector3Int rPos =  Vector3Int.FloorToInt(roomCenter + RandomV2(0, 5));
+                    if (frontLayer.GetTile(rPos) == null)
+                    {
+                        frontLayer.SetTile(rPos, tile);
+                        Instantiate(room.type.randomEnemies[Random.Range(0, room.type.randomEnemies.Length)], rPos, Quaternion.identity);
+                        enemies++;
+                    }
+                }
+
             }
 
+            //Place extra tiles
+            if (room.type.randomTiles.Length > 0)
+            {
+                int tiles = 0;
+                while (tiles < roomObjects)
+                {
+                    Vector3Int rPos = Vector3Int.FloorToInt(roomCenter + RandomV2(0, 5));
+                    if (frontLayer.GetTile(rPos) == null)
+                    {
+                        Tile tile = room.type.randomTiles[Random.Range(0, room.type.randomTiles.Length)];
+                        frontLayer.SetTile(rPos, tile);
+                        tiles++;
+                    }
+                }
+            }
         }
 
         Debug.Log("Filled Rooms");
