@@ -9,17 +9,16 @@ public class PlayerStats : MonoBehaviour
     void Awake()
     {
         stats = this;
+        health = maxHealth;
     }
 
     //Player
     public float maxHealth;
     public float health;
-    public float speed;
-    public float poison = 0;
-    public float bleed = 0;
-    public float fire = 0;
+    public float moveSpeed = 1f;    
 
     [Header("Arrows")]
+    public float reloadSpeed = 1f;
     public float damage = 1;
     public bool doubleShot = false;
     public bool diagonal = false;

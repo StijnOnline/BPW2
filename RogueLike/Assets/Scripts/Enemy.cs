@@ -5,21 +5,34 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float maxHealth;
-    [HideInInspector] public float health;
-    public float damage;    
-    public float poison = 0;
-    public float bleed = 0;
-    public float fire = 0;
+    public float health;
+    [HideInInspector] public float poison = 0;
+    [HideInInspector] public float bleed = 0;
+    [HideInInspector] public float fire = 0;    
 
+    [Space(10)]
     public float speed;
     public float moveDelay = 0f;
     float lastMove = 0f;
     public float detectionRange = 4f;
 
-    [HideInInspector] public Rigidbody2D rigidB;
+    [Space(10)]
+    public float damage;
+    public float attackRange = 0.5f;
+    public float attackDelay = 0f;
+    float lastAttack = 0f;
 
+    [Space(10)]
+    public bool isPointingRight;
+
+
+    [HideInInspector] public Rigidbody2D rigidB;
+    [HideInInspector] public Vector2 toPlayer;
     [HideInInspector] public GameObject healthBar;
     SpriteRenderer[] statusEffects;
+
+    
+    
 
     private void Start()
     {
@@ -36,11 +49,26 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(Time.time > lastMove + moveDelay)
+        Vector3 playerPos = GameManager.GM.player.transform.position;
+        toPlayer = (Vector2)(playerPos - transform.position);
+
+        if (Time.time > lastMove + moveDelay)
         {
             lastMove = Time.time;
             Move();
+            //TODO: flip sprite as neccesary
+
+            //float dir = Mathf.Sign(rigidB.velocity.x)
+            //dir = (!isPointingRight && rigidB.velocity.x > 0) ? -1 : 1;
+            //transform.localScale = new Vector3(dir, 1, 1);
         }
+        
+        if (Time.time > lastAttack + attackDelay && toPlayer.magnitude < attackRange)
+        {
+            lastAttack = Time.time;
+            Attack();
+        }
+
     }
 
     public void DamageTick()
@@ -49,10 +77,10 @@ public class Enemy : MonoBehaviour
         if (bleed > 0) { health -= PlayerStats.stats.bleedDamage; bleed -= 1; } 
         if (fire > 0) { health -= PlayerStats.stats.fireDamage; fire -= 1; }
         if (health <= 0) { Die(); }
-        UpdateHUD();
+        UpdateHP();
     }
 
-    public void UpdateHUD()
+    public void UpdateHP()
     {
         healthBar.transform.GetChild(1).localPosition = new Vector3( (health / maxHealth / 2f - 0.5f) , 0, 0);
         healthBar.transform.GetChild(1).localScale = new Vector3( (health / maxHealth) , 0.2f, 0);
@@ -72,4 +100,22 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy moved");
     }
+
+    public virtual void Attack()
+    {
+        Debug.Log("Enemy attacked");
+        GameManager.GM.player.GetComponent<Player>().TakeDamage(damage);
+    }
+
+
+    //public void OnCollisionEnter2D(Collision2D coll)
+    //{
+        
+    //    Debug.Log(coll.gameObject.name);
+    //    GameObject other = coll.gameObject;
+    //    if (other.tag == "Player")
+    //    {
+    //        other.GetComponent<Player>().TakeDamage(damage);
+    //    }
+    //}
 }

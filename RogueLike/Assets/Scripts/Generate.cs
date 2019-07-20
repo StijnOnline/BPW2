@@ -41,10 +41,13 @@ public class Generate : MonoBehaviour
         treasureRooms = gm.treasureRooms;
         roomObjects = gm.roomObjects;
 
+        roomSize = Mathf.Max(7, roomSize + 4 + hallSize);
         grid = new Room[gridSize, gridSize];
         GenerateGrid();
         PlaceTiles();
         FillRooms();
+
+        
 
     }
 
@@ -119,7 +122,7 @@ public class Generate : MonoBehaviour
 
     void PlaceTiles()
     {
-        roomSize = Mathf.Max(7, roomSize + 4 + hallSize);
+        
 
 
         for (int i = 0; i < grid.GetLength(0) * grid.GetLength(1); i++)
@@ -255,24 +258,26 @@ public class Generate : MonoBehaviour
 
             if (room.type.name == "Start")
             {
-                GameManager.GM.player = Instantiate(GameManager.GM.player, roomCenter, Quaternion.identity);
+                Vector3 pos = roomCenter + RandomV2(0, GameManager.GM.roomSize / 2);
+                GameManager.GM.player = Instantiate(GameManager.GM.player, pos, Quaternion.identity);
+                Instantiate(GameManager.GM.heal, pos, Quaternion.identity);
             }
             else
             if (room.type.name == "Treasure")
             {
                 Tile tile = new Tile(); tile.name = "Chest";
-                Chest[] chests = new Chest[2];
+                Pedestal[] chests = new Pedestal[2];
 
                 HashSet<Vector2> chestLocations = new HashSet<Vector2>();
                 while (chestLocations.Count < 2)
                 {
-                    chestLocations.Add(roomCenter + RandomV2(0, 3));
+                    chestLocations.Add(roomCenter + RandomV2(0, GameManager.GM.roomSize / 2 - 1));
                 }
 
                 frontLayer.SetTile(Vector3Int.FloorToInt(chestLocations.First()), tile);
-                chests[0] = Instantiate(GameManager.GM.chest, chestLocations.First(), Quaternion.identity).GetComponent<Chest>();
+                chests[0] = Instantiate(GameManager.GM.chest, chestLocations.First(), Quaternion.identity).GetComponent<Pedestal>();
                 frontLayer.SetTile(Vector3Int.FloorToInt(chestLocations.Last()), tile);
-                chests[1] = Instantiate(GameManager.GM.chest, chestLocations.Last(), Quaternion.identity).GetComponent<Chest>();
+                chests[1] = Instantiate(GameManager.GM.chest, chestLocations.Last(), Quaternion.identity).GetComponent<Pedestal>();
 
                 chests[0].otherChest = chests[1].gameObject;
                 chests[1].otherChest = chests[0].gameObject;
@@ -289,7 +294,7 @@ public class Generate : MonoBehaviour
                 int enemies = 0;
                 while (enemies < room.type.enemies)
                 {
-                    Vector3Int rPos =  Vector3Int.FloorToInt(roomCenter + RandomV2(0, 5));
+                    Vector3Int rPos =  Vector3Int.FloorToInt(roomCenter + RandomV2(0, GameManager.GM.roomSize/2));
                     if (frontLayer.GetTile(rPos) == null)
                     {
                         frontLayer.SetTile(rPos, tile);
@@ -298,7 +303,7 @@ public class Generate : MonoBehaviour
                     }
                 }
 
-            }
+            }        
 
             //Place extra tiles
             if (room.type.randomTiles.Length > 0)
@@ -306,7 +311,7 @@ public class Generate : MonoBehaviour
                 int tiles = 0;
                 while (tiles < roomObjects)
                 {
-                    Vector3Int rPos = Vector3Int.FloorToInt(roomCenter + RandomV2(0, 5));
+                    Vector3Int rPos = Vector3Int.FloorToInt(roomCenter + RandomV2(0, GameManager.GM.roomSize / 2));
                     if (frontLayer.GetTile(rPos) == null)
                     {
                         Tile tile = room.type.randomTiles[Random.Range(0, room.type.randomTiles.Length)];
@@ -314,6 +319,20 @@ public class Generate : MonoBehaviour
                         tiles++;
                     }
                 }
+            }
+        }
+
+        //Place Traps
+        int traps = GameManager.GM.traps;
+        while (traps > 0)
+        {
+            Vector3Int rPos = Vector3Int.FloorToInt((roomSize * gridSize)*Vector2.one + RandomV2(0, roomSize * gridSize));
+            if (frontLayer.GetTile(rPos) == null && backLayer.GetTile(rPos) != null && backLayer.GetTile(rPos).name == "Brick")
+            {
+                Tile tile = new Tile(); tile.name = "trap";
+                frontLayer.SetTile(rPos, tile);
+                Instantiate(GameManager.GM.trap, rPos + new Vector3(0.5f,0.5f), Quaternion.identity);
+                traps--;
             }
         }
 

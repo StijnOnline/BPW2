@@ -10,9 +10,9 @@ public class Rat : Enemy
         Vector3 playerPos = GameManager.GM.player.transform.position;
         Vector2 toPlayer = (Vector2)(playerPos - transform.position);
 
-        if (toPlayer.magnitude < detectionRange) 
+        if (toPlayer.magnitude < detectionRange)
         {
-            rigidB.velocity = toPlayer * speed;
+            rigidB.velocity = toPlayer.normalized * speed;
         }
     }
 
@@ -20,4 +20,6 @@ public class Rat : Enemy
     {
         Destroy(gameObject);
     }
+
+    
 }

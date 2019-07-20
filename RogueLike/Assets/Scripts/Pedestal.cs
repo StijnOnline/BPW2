@@ -5,10 +5,10 @@ using TMPro;
 
 // TODO: fix chests having dupe upgrade after you collected some
 
-public class Chest : MonoBehaviour
+
+public class Pedestal : MonoBehaviour
 {
     public GameManager.UpgradeType type;
-    public Sprite opened;
     public TextMeshPro text;
 
     public GameObject otherChest;
@@ -26,13 +26,14 @@ public class Chest : MonoBehaviour
         if(other.tag == "Player" && !locked)
         {
             other.GetComponent<Player>().Upgrade(type);
-            GetComponent<SpriteRenderer>().sprite = opened;
             text.SetText("Obtained\n"+type.ToString());
             locked = true;
-            
+            GetComponent<Animator>().SetBool("Broken", true);
+
             otherChest.transform.GetChild(0).gameObject.SetActive(false); //disable light
             otherChest.transform.GetChild(1).gameObject.SetActive(false); //disable text
-            otherChest.GetComponent<Chest>().locked = true;
+            otherChest.GetComponent<Pedestal>().locked = true;
+            otherChest.GetComponent<Animator>().SetBool("Broken",true);
         }
     }
 

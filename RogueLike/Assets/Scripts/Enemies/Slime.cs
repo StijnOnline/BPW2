@@ -15,7 +15,7 @@ public class Slime : Enemy
 
         if (toPlayer.magnitude < detectionRange) 
         {
-            rigidB.AddForce( toPlayer * speed, ForceMode2D.Impulse );
+            rigidB.AddForce( toPlayer.normalized * speed, ForceMode2D.Impulse );
         }
     }
 

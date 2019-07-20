@@ -10,7 +10,7 @@ public class Arrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(transform.right * speed);
+        rb.AddForce(transform.right * speed, ForceMode2D.Impulse);
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class Arrow : MonoBehaviour
             if (PlayerStats.stats.doBleed) { enemy.bleed = PlayerStats.stats.bleedTime; }
             if (PlayerStats.stats.doPoison) { enemy.poison = PlayerStats.stats.poisonTime; }
             if (enemy.health <= 0) { enemy.Die(); }
-            else { enemy.UpdateHUD(); }
+            else { enemy.UpdateHP(); }
             
             
         }

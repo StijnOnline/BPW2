@@ -43,21 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74daf1557988ccd439b1ba8aa4c55606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSize: 9
+  roomSize: 7
   doorSize: 3
   hallSize: 2
   gridSize: 10
   minRooms: 20
   treasureRooms: 5
+  traps: 3
   startRoom: {fileID: 11400000, guid: 0fbbd4cb0b6d39c4482c1f75cba02c4f, type: 2}
   treasureRoom: {fileID: 11400000, guid: 0ea2b7d21fc407a47aaa727661c44f7c, type: 2}
   bossRoom: {fileID: 11400000, guid: 626b197219da7f14dbbaeb301d311f1b, type: 2}
-  randomRooms:
-  - {fileID: 11400000, guid: e1c567eed6d79f74ab406877d736c526, type: 2}
-  - {fileID: 11400000, guid: cc23deacba0a76d49a450dcd4d020240, type: 2}
+  randomRooms: []
+  roomObjects: 3
   collectedUpgrades: 
   player: {fileID: 8374485853617757647, guid: 349b9fd7d8a3116469f4707753e5cda7, type: 3}
   chest: {fileID: 2620391440024705959, guid: ea8f187dd22737749a1e112c49852758, type: 3}
+  heal: {fileID: 6806089326164930557, guid: b5e281aaa541ac84ab5d26e2eb5ff37d, type: 3}
+  trap: {fileID: 3960095225032250674, guid: f9c6962629a39ce4fa163d71c69d0f62, type: 3}
   enemies:
   - {fileID: 6921316493332589581, guid: 9ce760551f476ca45858107fb3098e96, type: 3}
   healthBar: {fileID: 3516808188786009585, guid: e85bf2c83f811f142af7be4158794c27,

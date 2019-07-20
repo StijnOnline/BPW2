@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public int gridSize = 5;
     public int minRooms = 4;
     public int treasureRooms = 1;
+    public int roomObjects = 3;
+    public int traps = 3;
     
 
     [Header("Rooms")]
@@ -21,16 +23,18 @@ public class GameManager : MonoBehaviour
     public RoomType treasureRoom;
     public RoomType bossRoom;
     public RoomType[] randomRooms;
-    public int roomObjects = 3;
+    
 
     [Header("Upgrades")]
     public List<UpgradeType> collectedUpgrades = new List<UpgradeType>();
-    public enum UpgradeType { HealthUp, DamageUp, DoubleShot, DiagnalShot, PoisonArrow, BleedArrow, FireArrow };
+    public enum UpgradeType { HealthUp, DamageUp, AttackSpeedUp, DoubleShot, DiagnalShot, PoisonArrow, BleedArrow, FireArrow };
     
 
     [Header("GameObjects")]
     public GameObject player;
-    public GameObject chest;    
+    public GameObject chest;
+    public GameObject heal;    
+    public GameObject trap;    
     [Space(5)]
     public GameObject[] enemies;
 
