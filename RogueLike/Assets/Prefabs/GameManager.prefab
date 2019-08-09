@@ -54,7 +54,9 @@ MonoBehaviour:
   startRoom: {fileID: 11400000, guid: 0fbbd4cb0b6d39c4482c1f75cba02c4f, type: 2}
   treasureRoom: {fileID: 11400000, guid: 0ea2b7d21fc407a47aaa727661c44f7c, type: 2}
   bossRoom: {fileID: 11400000, guid: 626b197219da7f14dbbaeb301d311f1b, type: 2}
-  randomRooms: []
+  randomRooms:
+  - {fileID: 11400000, guid: e1c567eed6d79f74ab406877d736c526, type: 2}
+  - {fileID: 11400000, guid: cc23deacba0a76d49a450dcd4d020240, type: 2}
   collectedUpgrades: 
   player: {fileID: 8374485853617757647, guid: 349b9fd7d8a3116469f4707753e5cda7, type: 3}
   chest: {fileID: 2620391440024705959, guid: ea8f187dd22737749a1e112c49852758, type: 3}

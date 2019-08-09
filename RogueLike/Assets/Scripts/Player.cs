@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
             Instantiate(arrow, crossBow.position + crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, 5));
             Instantiate(arrow, crossBow.position - crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, -5));
         }
-        audioSource.PlayOneShot(bowAudio,0.3f);
+        audioSource.PlayOneShot(bowAudio,0.1f);
         
     }
 

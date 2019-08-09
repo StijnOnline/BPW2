@@ -15,5 +15,6 @@ MonoBehaviour:
   roomChance: 0
   randomTiles:
   - {fileID: 11400000, guid: 25c42be9da98fde4182f813920536c6b, type: 2}
-  enemies: 0
-  randomEnemies: []
+  enemies: 2
+  randomEnemies:
+  - {fileID: 6921316493332589581, guid: 2766fbd1d0a20eb4a9f503af88572788, type: 3}

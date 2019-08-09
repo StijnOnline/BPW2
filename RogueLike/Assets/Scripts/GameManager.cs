@@ -56,13 +56,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         GM = this;
-        randomRooms = Resources.LoadAll<RoomType>("Rooms/Random");
+        //randomRooms = Resources.LoadAll<RoomType>("Rooms/Random");
 
     }
 
     public void Update()
     {
-        if (bossTimerText != null) {bossTimerText.SetText("Boss arriving in " + Mathf.FloorToInt(bossTimer - Time.time));}
+        if (bossTimerText != null) {bossTimerText.SetText("Boss arriving in\n" + Mathf.FloorToInt(bossTimer - Time.time));}
         if (bossTimer != 0 && Time.time > bossTimer)
         {
             SceneManager.LoadScene("Boss");

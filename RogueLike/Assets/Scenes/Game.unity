@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -275,20 +275,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: randomRooms.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
-        type: 3}
       propertyPath: healthSprites.Array.size
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
-        type: 3}
-      propertyPath: randomRooms.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: e1c567eed6d79f74ab406877d736c526,
-        type: 2}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
       propertyPath: traps
@@ -309,12 +298,6 @@ PrefabInstance:
       propertyPath: bossTimer
       value: 200
       objectReference: {fileID: 0}
-    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
-        type: 3}
-      propertyPath: randomRooms.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: cc23deacba0a76d49a450dcd4d020240,
-        type: 2}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
       propertyPath: healthImage
@@ -552,12 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1654708633, guid: 8d88e7c143d1b62479bae5678f21cc3a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.20239258
-      objectReference: {fileID: 0}
-    - target: {fileID: 3598726716949538221, guid: 8d88e7c143d1b62479bae5678f21cc3a,
-        type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 0
+      value: -0.20263672
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d88e7c143d1b62479bae5678f21cc3a, type: 3}
