@@ -31,10 +31,17 @@ public class Arrow : MonoBehaviour
             if (PlayerStats.stats.doPoison) { enemy.poison = PlayerStats.stats.poisonTime; }
             if (enemy.health <= 0) { enemy.Die(); }
             else { enemy.UpdateHP(); }
-            
-            
-        }
 
+            AudioSource audioSrc = enemy.GetComponent<AudioSource>();
+            if(audioSrc != null)
+            {
+                audioSrc.PlayOneShot(enemy.hitAudio);
+            }
+        }
+        if (collision.gameObject.tag == "Lantern" && PlayerStats.stats.doFire)
+        {
+            collision.gameObject.GetComponent<Lantern>().Light();
+        }
         Destroy(gameObject);
     }
 }

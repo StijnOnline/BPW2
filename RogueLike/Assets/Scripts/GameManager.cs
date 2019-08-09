@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
     public GameObject chest;
     public GameObject heal;    
     public GameObject trap;    
+    public Boss boss;    
     [Space(5)]
     public GameObject[] enemies;
 
@@ -42,12 +45,28 @@ public class GameManager : MonoBehaviour
     public GameObject healthBar;
     public Sprite poisonSprite;
     public Sprite bleedSprite;
-    public Sprite fireSprite; 
+    public Sprite fireSprite;
+    public TMPro.TextMeshProUGUI bossTimerText;
+    public Image healthImage;
+    public Sprite[] healthSprites;
+
+    [Header("Other")]
+    public float bossTimer = 300;
 
     void Awake()
     {
         GM = this;
         randomRooms = Resources.LoadAll<RoomType>("Rooms/Random");
+
+    }
+
+    public void Update()
+    {
+        if (bossTimerText != null) {bossTimerText.SetText("Boss arriving in " + Mathf.FloorToInt(bossTimer - Time.time));}
+        if (bossTimer != 0 && Time.time > bossTimer)
+        {
+            SceneManager.LoadScene("Boss");
+        }
     }
 
 }

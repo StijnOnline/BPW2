@@ -28,7 +28,7 @@ public class Slime : Enemy
             newSlimes.Add(Instantiate(gameObject, transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)), Quaternion.identity));
             foreach (GameObject newslime in newSlimes)
             {
-                newslime.transform.localScale = transform.localScale / 2;
+                newslime.transform.localScale = transform.localScale * 2 / 3;
                 Destroy(newslime.transform.GetChild(0).gameObject); //Destroy old healthbar
 
                 Slime slime = newslime.GetComponent<Slime>();
@@ -39,6 +39,6 @@ public class Slime : Enemy
             
         }
 
-        Destroy(gameObject);
+        base.Die();
     }
 }

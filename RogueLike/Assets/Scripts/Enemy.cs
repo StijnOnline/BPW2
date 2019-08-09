@@ -25,18 +25,27 @@ public class Enemy : MonoBehaviour
     [Space(10)]
     public bool isPointingRight;
 
+    [Header("Audio")]
+    public AudioClip attackAudio;
+    public AudioClip hitAudio;
+    public AudioClip deathAudio;
+    AudioSource audioSource;
 
+    
     [HideInInspector] public Rigidbody2D rigidB;
     [HideInInspector] public Vector2 toPlayer;
     [HideInInspector] public GameObject healthBar;
     SpriteRenderer[] statusEffects;
 
     
+    Vector3 startScale;
+
     
 
     private void Start()
     {
         rigidB = GetComponent<Rigidbody2D>();
+        audioSource = gameObject.AddComponent<AudioSource>();
 
         health = maxHealth;
 
@@ -44,10 +53,12 @@ public class Enemy : MonoBehaviour
         healthBar.transform.localPosition = new Vector3(0,0.4f,0);
         statusEffects = healthBar.transform.GetChild(0).GetComponentsInChildren<SpriteRenderer>();
 
+        startScale = transform.localScale;
+
         InvokeRepeating("DamageTick", 0f,1f);
     }
 
-    void Update()
+    public virtual void Update()
     {
         Vector3 playerPos = GameManager.GM.player.transform.position;
         toPlayer = (Vector2)(playerPos - transform.position);
@@ -56,11 +67,7 @@ public class Enemy : MonoBehaviour
         {
             lastMove = Time.time;
             Move();
-            //TODO: flip sprite as neccesary
-
-            //float dir = Mathf.Sign(rigidB.velocity.x)
-            //dir = (!isPointingRight && rigidB.velocity.x > 0) ? -1 : 1;
-            //transform.localScale = new Vector3(dir, 1, 1);
+            FlipSprite();
         }
         
         if (Time.time > lastAttack + attackDelay && toPlayer.magnitude < attackRange)
@@ -93,6 +100,13 @@ public class Enemy : MonoBehaviour
     
     public virtual void Die()
     {
+        if (deathAudio != null) {
+            audioSource.PlayOneShot(deathAudio);
+        }
+        else if(hitAudio != null)
+        {
+            audioSource.PlayOneShot(hitAudio);
+        }
         Destroy(gameObject);
     }
 
@@ -101,9 +115,22 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy moved");
     }
 
+    public void FlipSprite()
+    {
+        float dir = transform.localScale.x;
+        if (isPointingRight && rigidB.velocity.x > 0) { dir = 1; }
+        if (isPointingRight && rigidB.velocity.x < 0) { dir = -1; }
+        if (!isPointingRight && rigidB.velocity.x > 0) { dir = -1; }
+        if (!isPointingRight && rigidB.velocity.x < 0) { dir = 1; }
+        transform.localScale = Vector3.Scale(startScale , new Vector3(dir, 1, 1));
+    }
+
     public virtual void Attack()
     {
-        Debug.Log("Enemy attacked");
+        if (attackAudio != null)
+        {
+            audioSource.PlayOneShot(attackAudio);
+        }
         GameManager.GM.player.GetComponent<Player>().TakeDamage(damage);
     }
 

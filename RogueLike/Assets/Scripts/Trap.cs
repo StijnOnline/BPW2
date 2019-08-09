@@ -8,10 +8,21 @@ public class Trap : MonoBehaviour
     public float triggerDelay = 0.3f;
     float lastTrigger = 0;
     Animator an;
-
+    AudioSource audioSource;
+    public AudioClip activateAudio;
     void Start()
     {
         an = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            lastTrigger = Time.time;
+            audioSource.PlayOneShot(activateAudio);
+        }
     }
 
     void OnTriggerStay2D(Collider2D other)

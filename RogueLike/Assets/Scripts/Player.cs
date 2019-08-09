@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.LWRP;
-
-// TODO: y-based layering
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -17,10 +16,18 @@ public class Player : MonoBehaviour
 
     public Light2D playerLight;
     public Light2D bowLight;
+
+
+    AudioSource audioSource;
+    [Header("Audio")]
+    public AudioClip hurtAudio;
+    public AudioClip bowAudio;
+
     void Start()
     {
         rigidB = GetComponent<Rigidbody2D>();
         shoot = crossBow.GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -71,13 +78,19 @@ public class Player : MonoBehaviour
             Instantiate(arrow, crossBow.position + crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, 5));
             Instantiate(arrow, crossBow.position - crossBow.up * 0.15f, crossBow.rotation * Quaternion.Euler(0, 0, -5));
         }
+        audioSource.PlayOneShot(bowAudio,0.3f);
+        
     }
 
     public void TakeDamage(float dmg)
     {
         PlayerStats.stats.health -= dmg;
         if (PlayerStats.stats.health <= 0) { Die(); }
-        else { StartCoroutine(ChangeLights());}        
+        else { StartCoroutine(ChangeLights());}
+        audioSource.PlayOneShot(hurtAudio);
+
+        int healthsprite = Mathf.Min( Mathf.FloorToInt(PlayerStats.stats.health / PlayerStats.stats.maxHealth * 4f) , 3);
+        GameManager.GM.healthImage.sprite = GameManager.GM.healthSprites[healthsprite];
     }
 
     public IEnumerator ChangeLights()
@@ -94,28 +107,22 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        playerLight.color = new Color(100/255f, 180/255f, 1);
-        float pHealth = PlayerStats.stats.health / PlayerStats.stats.maxHealth;
-        playerLight.pointLightOuterRadius = 6 * pHealth + 1; // 1 - 7
-        playerLight.intensity = 0.2f * pHealth + 0.3f; // 0.3 - 0.5
-        bowLight.pointLightOuterAngle = 90 * pHealth + 30; //30 - 120
-        bowLight.pointLightOuterRadius = 3 * pHealth + 3; // 3 - 6
-        bowLight.intensity = 0.2f * pHealth + 0.3f; // 0.3 - 0.5
+        SetLights();
     }
     public void SetLights()
     {
         playerLight.color = new Color(100/255f, 180/255f, 1);
         float pHealth = PlayerStats.stats.health / PlayerStats.stats.maxHealth;
-        playerLight.pointLightOuterRadius = 5 * pHealth + 2; // 2 - 7
-        playerLight.intensity = 0.2f * pHealth + 0.3f; // 0.3 - 0.5
+        playerLight.pointLightOuterRadius = 4 * pHealth + 3; // 3 - 7
+        playerLight.intensity = 0.3f * pHealth + 0.2f; // 0.2 - 0.5
         bowLight.pointLightOuterAngle = 90 * pHealth + 30; //30 - 120
-        bowLight.pointLightOuterRadius = 3 * pHealth + 3; // 3 - 6
-        bowLight.intensity = 0.2f * pHealth + 0.3f; // 0.3 - 0.5
+        bowLight.pointLightOuterRadius = 2 * pHealth + 4; // 4 - 6
+        bowLight.intensity = 0.3f * pHealth + 0.2f; // 0.2 - 0.5
     }
 
     void Die()
     {
-        Debug.Log("YOU DIED");
+        SceneManager.LoadScene(0);
     }
 
     public void Upgrade(GameManager.UpgradeType type)

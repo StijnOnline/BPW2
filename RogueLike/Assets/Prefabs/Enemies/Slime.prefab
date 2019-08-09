@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110274cefcdc12a45adf73328c8a4524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 30
   health: 0
   poison: 0
   bleed: 0
@@ -155,6 +155,9 @@ MonoBehaviour:
   attackRange: 0.6
   attackDelay: 1
   isPointingRight: 1
+  attackAudio: {fileID: 8300000, guid: 547a3e140f8a45842aa5ff770942291e, type: 3}
+  hitAudio: {fileID: 8300000, guid: fa8301e220129944fb4d0b0de8a24650, type: 3}
+  deathAudio: {fileID: 8300000, guid: ab789f9888fc84d4091658ea33b34247, type: 3}
   rigidB: {fileID: 0}
   toPlayer: {x: 0, y: 0}
   healthBar: {fileID: 0}

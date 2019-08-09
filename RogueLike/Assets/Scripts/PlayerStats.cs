@@ -8,8 +8,16 @@ public class PlayerStats : MonoBehaviour
 
     void Awake()
     {
-        stats = this;
-        health = maxHealth;
+        if (stats == null)
+        {
+            stats = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
     //Player

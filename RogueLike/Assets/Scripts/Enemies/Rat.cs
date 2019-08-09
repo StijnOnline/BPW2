@@ -15,11 +15,5 @@ public class Rat : Enemy
             rigidB.velocity = toPlayer.normalized * speed;
         }
     }
-
-    public override void Die()
-    {
-        Destroy(gameObject);
-    }
-
-    
+           
 }
