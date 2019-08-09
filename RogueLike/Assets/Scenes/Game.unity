@@ -280,16 +280,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: traps
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
-        type: 3}
-      propertyPath: gridSize
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
-        type: 3}
       propertyPath: bossTimerText
       value: 
       objectReference: {fileID: 1683650608}

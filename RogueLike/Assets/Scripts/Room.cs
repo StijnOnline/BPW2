@@ -22,6 +22,8 @@ public class Room
 
         //pick random from list, throw dice, test, repeat
         type = GameManager.GM.randomRooms[Random.Range(0, GameManager.GM.randomRooms.Length)];
+
+        Debug.Log(type);
     }
 }
 

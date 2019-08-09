@@ -46,14 +46,14 @@ MonoBehaviour:
   roomSize: 7
   doorSize: 3
   hallSize: 2
-  gridSize: 10
+  gridSize: 7
   minRooms: 20
   treasureRooms: 5
   roomObjects: 3
-  traps: 3
+  traps: 20
   startRoom: {fileID: 11400000, guid: 0fbbd4cb0b6d39c4482c1f75cba02c4f, type: 2}
   treasureRoom: {fileID: 11400000, guid: 0ea2b7d21fc407a47aaa727661c44f7c, type: 2}
-  bossRoom: {fileID: 11400000, guid: 626b197219da7f14dbbaeb301d311f1b, type: 2}
+  bossRoom: {fileID: 11400000, guid: 2b24ca1e23f3c534f99488530330d09e, type: 2}
   randomRooms:
   - {fileID: 11400000, guid: e1c567eed6d79f74ab406877d736c526, type: 2}
   - {fileID: 11400000, guid: cc23deacba0a76d49a450dcd4d020240, type: 2}

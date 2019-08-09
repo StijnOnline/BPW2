@@ -256,6 +256,9 @@ public class Generate : MonoBehaviour
             Room room = grid[location.x, location.y];
             Vector2 roomCenter = location * roomSize + Vector2.one * roomSize / 2;
 
+
+            Debug.Log(grid[location.x, location.y]);
+            Debug.Log(grid[location.x, location.y].type);
             if (room.type.name == "Start")
             {
                 Vector3 pos = roomCenter + RandomV2(0, GameManager.GM.roomSize / 2);

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Boss
   m_EditorClassIdentifier: Assembly-CSharp::RoomType
+  roomChance: 0
   randomTiles: []
+  enemies: 0
   randomEnemies: []
