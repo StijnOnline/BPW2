@@ -256,7 +256,7 @@ public class Generate : MonoBehaviour
             Room room = grid[location.x, location.y];
             Vector2 roomCenter = location * roomSize + Vector2.one * roomSize / 2;
 
-
+            //TODO: FIX Room.type is null
             Debug.Log(grid[location.x, location.y]);
             Debug.Log(grid[location.x, location.y].type);
             if (room.type.name == "Start")

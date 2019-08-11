@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -275,11 +275,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: healthSprites.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
-        type: 3}
       propertyPath: bossTimerText
       value: 
       objectReference: {fileID: 1683650608}
@@ -295,30 +290,52 @@ PrefabInstance:
       objectReference: {fileID: 214970565}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: healthSprites.Array.data[0]
+      propertyPath: transition
       value: 
-      objectReference: {fileID: 8133923789288904650, guid: 83f2f73777832de4db20b8c3440afcbf,
-        type: 3}
+      objectReference: {fileID: 817754570}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: healthSprites.Array.data[1]
+      propertyPath: transitionText
       value: 
-      objectReference: {fileID: -5731162285055332302, guid: 83f2f73777832de4db20b8c3440afcbf,
-        type: 3}
+      objectReference: {fileID: 1821587635}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: healthSprites.Array.data[2]
+      propertyPath: startRoom
       value: 
-      objectReference: {fileID: 5407656843090688360, guid: 83f2f73777832de4db20b8c3440afcbf,
-        type: 3}
+      objectReference: {fileID: 11400000, guid: 0fbbd4cb0b6d39c4482c1f75cba02c4f,
+        type: 2}
     - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
-      propertyPath: healthSprites.Array.data[3]
+      propertyPath: treasureRoom
       value: 
-      objectReference: {fileID: -8630923909508717717, guid: 83f2f73777832de4db20b8c3440afcbf,
+      objectReference: {fileID: 11400000, guid: 0ea2b7d21fc407a47aaa727661c44f7c,
+        type: 2}
+    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
         type: 3}
+      propertyPath: bossRoom
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b24ca1e23f3c534f99488530330d09e,
+        type: 2}
+    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
+        type: 3}
+      propertyPath: randomRooms.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: cc23deacba0a76d49a450dcd4d020240,
+        type: 2}
+    - target: {fileID: 283101190148115446, guid: 81959d0bcbc884a4199a5f1af9159ab1,
+        type: 3}
+      propertyPath: randomRooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e1c567eed6d79f74ab406877d736c526,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81959d0bcbc884a4199a5f1af9159ab1, type: 3}
+--- !u!1 &817754570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8441211236781053556, guid: 8d88e7c143d1b62479bae5678f21cc3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1683650607}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1500897242
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,15 +540,23 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1654708633, guid: 8d88e7c143d1b62479bae5678f21cc3a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.20263672
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d88e7c143d1b62479bae5678f21cc3a, type: 3}
 --- !u!114 &1683650608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4820031151014345822, guid: 8d88e7c143d1b62479bae5678f21cc3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1683650607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1821587635 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3320217506027666071, guid: 8d88e7c143d1b62479bae5678f21cc3a,
     type: 3}
   m_PrefabInstance: {fileID: 1683650607}
   m_PrefabAsset: {fileID: 0}

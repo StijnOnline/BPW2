@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 835000306305867503}
   - component: {fileID: 4897510715810468704}
   - component: {fileID: 6921316493332589582}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110274cefcdc12a45adf73328c8a4524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
   maxHealth: 30
   health: 0
   poison: 0
@@ -152,12 +153,13 @@ MonoBehaviour:
   moveDelay: 1.5
   detectionRange: 5
   damage: 10
-  attackRange: 0.6
+  attackRange: 0.7
   attackDelay: 1
   isPointingRight: 1
   attackAudio: {fileID: 8300000, guid: 547a3e140f8a45842aa5ff770942291e, type: 3}
   hitAudio: {fileID: 8300000, guid: fa8301e220129944fb4d0b0de8a24650, type: 3}
   deathAudio: {fileID: 8300000, guid: ab789f9888fc84d4091658ea33b34247, type: 3}
+  audioSource: {fileID: 0}
   rigidB: {fileID: 0}
   toPlayer: {x: 0, y: 0}
   healthBar: {fileID: 0}
@@ -172,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1019293617087880895}
   - component: {fileID: 2908456644546737770}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Schadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

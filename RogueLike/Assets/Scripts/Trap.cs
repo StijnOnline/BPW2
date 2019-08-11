@@ -20,7 +20,7 @@ public class Trap : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            lastTrigger = Time.time;
+            lastTrigger = Time.time - triggerDelay/2f; //Trap waits a bit before first tick
             audioSource.PlayOneShot(activateAudio);
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public bool dead = false;
     public float maxHealth;
     public float health;
     [HideInInspector] public float poison = 0;
@@ -29,7 +30,7 @@ public class Enemy : MonoBehaviour
     public AudioClip attackAudio;
     public AudioClip hitAudio;
     public AudioClip deathAudio;
-    AudioSource audioSource;
+    [HideInInspector] public AudioSource audioSource;
 
     
     [HideInInspector] public Rigidbody2D rigidB;
@@ -70,7 +71,7 @@ public class Enemy : MonoBehaviour
             FlipSprite();
         }
         
-        if (Time.time > lastAttack + attackDelay && toPlayer.magnitude < attackRange)
+        if (Time.time > lastAttack + attackDelay && toPlayer.magnitude < attackRange && !dead)
         {
             lastAttack = Time.time;
             Attack();
@@ -83,7 +84,7 @@ public class Enemy : MonoBehaviour
         if (poison > 0) {health -= PlayerStats.stats.poisonDamage; poison -= 1; } 
         if (bleed > 0) { health -= PlayerStats.stats.bleedDamage; bleed -= 1; } 
         if (fire > 0) { health -= PlayerStats.stats.fireDamage; fire -= 1; }
-        if (health <= 0) { Die(); }
+        if (health <= 0 && !dead) { Die(); }
         UpdateHP();
     }
 
@@ -136,8 +137,7 @@ public class Enemy : MonoBehaviour
 
 
     //public void OnCollisionEnter2D(Collision2D coll)
-    //{
-        
+    //{        
     //    Debug.Log(coll.gameObject.name);
     //    GameObject other = coll.gameObject;
     //    if (other.tag == "Player")

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,18 +48,25 @@ public class GameManager : MonoBehaviour
     public Sprite poisonSprite;
     public Sprite bleedSprite;
     public Sprite fireSprite;
-    public TMPro.TextMeshProUGUI bossTimerText;
+    public TextMeshProUGUI bossTimerText;
     public Image healthImage;
     public Sprite[] healthSprites;
+    public GameObject transition;
+    public TextMeshProUGUI transitionText;
 
     [Header("Other")]
     public float bossTimer = 300;
+    public AudioClip LanternActivateAudio;
+    public AudioClip PedestalActivateAudio;
+    public AudioClip HealActivateAudio;
 
     void Awake()
     {
         GM = this;
-        //randomRooms = Resources.LoadAll<RoomType>("Rooms/Random");
-
+        //startRoom = Resources.Load<RoomType>("Start");
+        //treasureRoom = Resources.Load<RoomType>("Treasure");
+        //bossRoom = Resources.Load<RoomType>("Boss");
+        //randomRooms = Resources.LoadAll<RoomType>("Random");
     }
 
     public void Update()
@@ -65,8 +74,16 @@ public class GameManager : MonoBehaviour
         if (bossTimerText != null) {bossTimerText.SetText("Boss arriving in\n" + Mathf.FloorToInt(bossTimer - Time.time));}
         if (bossTimer != 0 && Time.time > bossTimer)
         {
-            SceneManager.LoadScene("Boss");
+            StartCoroutine(TriggerBossFight());            
         }
+    }
+
+    public IEnumerator TriggerBossFight()
+    {
+        transition.SetActive(true);
+        transitionText.SetText("Boss Fight");
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("Boss");
     }
 
 }

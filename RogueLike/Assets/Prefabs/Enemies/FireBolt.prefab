@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBallSpeed: 5
   rotateSpeed: 1.5
-  dmg: 5
+  dmg: 10
 --- !u!1 &5765973324244970692
 GameObject:
   m_ObjectHideFlags: 0

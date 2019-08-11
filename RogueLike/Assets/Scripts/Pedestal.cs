@@ -11,10 +11,13 @@ public class Pedestal : MonoBehaviour
     public GameObject otherChest;
     public bool locked = false;
 
+    AudioSource audioSource;
+
     
     void Start() 
     {
         SelectType();
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -44,6 +47,8 @@ public class Pedestal : MonoBehaviour
     {
         if(other.tag == "Player" && !locked)
         {
+            audioSource.PlayOneShot(GameManager.GM.PedestalActivateAudio);
+
             other.GetComponent<Player>().Upgrade(type);
             text.SetText("Obtained\n"+type.ToString());
             locked = true;

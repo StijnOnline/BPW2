@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4897510715810468704}
   - component: {fileID: 4958403446249669056}
   - component: {fileID: 486480342035621827}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057022276206536203}
   - component: {fileID: 4751565633911158395}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Schadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

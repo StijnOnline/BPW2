@@ -85,15 +85,12 @@ public class Player : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         PlayerStats.stats.health -= dmg;
-        if (PlayerStats.stats.health <= 0) { Die(); }
+        if (PlayerStats.stats.health <= 0) { StartCoroutine(Die()); }
         else { StartCoroutine(ChangeLights());}
-        audioSource.PlayOneShot(hurtAudio);
-
-        int healthsprite = Mathf.Min( Mathf.FloorToInt(PlayerStats.stats.health / PlayerStats.stats.maxHealth * 4f) , 3);
-        GameManager.GM.healthImage.sprite = GameManager.GM.healthSprites[healthsprite];
+        audioSource.PlayOneShot(hurtAudio);        
     }
 
-    public IEnumerator ChangeLights()
+    public IEnumerator ChangeLights() //weird name but ok
     {
         playerLight.pointLightOuterRadius = 8;
         playerLight.intensity = 0.5f;
@@ -109,7 +106,7 @@ public class Player : MonoBehaviour
 
         SetLights();
     }
-    public void SetLights()
+    public void SetLights() //weird name but ok
     {
         playerLight.color = new Color(100/255f, 180/255f, 1);
         float pHealth = PlayerStats.stats.health / PlayerStats.stats.maxHealth;
@@ -118,11 +115,17 @@ public class Player : MonoBehaviour
         bowLight.pointLightOuterAngle = 90 * pHealth + 30; //30 - 120
         bowLight.pointLightOuterRadius = 2 * pHealth + 4; // 4 - 6
         bowLight.intensity = 0.3f * pHealth + 0.2f; // 0.2 - 0.5
+
+        int healthsprite = Mathf.Min(Mathf.FloorToInt(PlayerStats.stats.health / PlayerStats.stats.maxHealth * 4f), 3);
+        GameManager.GM.healthImage.sprite = GameManager.GM.healthSprites[healthsprite];
     }
 
-    void Die()
+    public IEnumerator Die()
     {
-        SceneManager.LoadScene(0);
+        GameManager.GM.transition.SetActive(true);
+        GameManager.GM.transitionText.SetText("Game Over");
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Upgrade(GameManager.UpgradeType type)

@@ -77,4 +77,11 @@ MonoBehaviour:
   - {fileID: -5731162285055332302, guid: 83f2f73777832de4db20b8c3440afcbf, type: 3}
   - {fileID: 5407656843090688360, guid: 83f2f73777832de4db20b8c3440afcbf, type: 3}
   - {fileID: -8630923909508717717, guid: 83f2f73777832de4db20b8c3440afcbf, type: 3}
+  transition: {fileID: 0}
+  transitionText: {fileID: 0}
   bossTimer: 300
+  LanternActivateAudio: {fileID: 8300000, guid: 0a57e58f60c02794190a280f6227f27f,
+    type: 3}
+  PedestalActivateAudio: {fileID: 8300000, guid: ae14314db3495b348a8501d9d68273b5,
+    type: 3}
+  HealActivateAudio: {fileID: 8300000, guid: 9a041386a82cbb845b53fbfa5ebce68c, type: 3}
